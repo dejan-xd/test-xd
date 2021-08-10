@@ -1,15 +1,16 @@
-name: CI
+name: CI to Docker Hub
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+    
 jobs:
+
   build:
     runs-on: ubuntu-latest
+    
     steps:
+    
       - name: Check Out Repo 
         uses: actions/checkout@v2
 
@@ -28,20 +29,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-          file: ./NistagramBackend/Dockerfile
+          file: ./docker-test/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-
-      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '5.0.x'
-          
-      - name: Build
-        run: dotnet build -c Release --no-restore
-        
-      - name: Test
-        run: dotnet test -c Release --no-build
