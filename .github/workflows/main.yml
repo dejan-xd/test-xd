@@ -1,4 +1,4 @@
-name: CI to Docker Hub
+name: CI to Docker Hub ASDADS
 
 on:
   push:
@@ -8,7 +8,7 @@ jobs:
 
 
 
-  build:
+  CI:
     runs-on: ubuntu-latest
     
     steps:
